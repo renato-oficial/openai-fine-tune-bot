@@ -4,7 +4,7 @@ const { OpenaiController } = require("./openaiController")
 
 const createFineTuneComand = async (ctx) => {
     const openaiController = new OpenaiController(User.openai_token)
-    await openaiController.createFineTune()
+    await openaiController.createFineTune(User.queue)
 }
 
 module.exports = { createFineTuneComand }

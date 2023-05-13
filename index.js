@@ -1,3 +1,5 @@
+//https://docs.github.com/pt/get-started/getting-started-with-git/managing-remote-repositories
+
 const { Telegraf, Markup } = require('telegraf');
 const { message } = require('telegraf/filters');
 const { uploadCommand } = require('./controller/uploadCommand');
@@ -66,9 +68,9 @@ bot.on('callback_query', async (ctx) => {
         
         
          return await ctx.reply(`
-**✅ Escolha um modelo para treinar sua IA 😉\n
-➡️ Nome do arquivo: **${hasFineTune["filename"]}*\n
-🆔 Identificador: ${hasFineTune["key"]}**`, Markup
+** ✅ Escolha um modelo para treinar sua IA 😉
+➡️ Nome do arquivo: ${hasFineTune["filename"]}
+🆔 Identificador: ${hasFineTune["key"]} **`, Markup
              .inlineKeyboard([
                 [ Markup.button.callback("• Sim, por favor!", "yep")],
                 [Markup.button.callback("• Não, obrigado!", "not")]
@@ -86,5 +88,8 @@ bot.on('callback_query', async (ctx) => {
 
 bot.command('modelos', listFineTunesCommand)
 bot.on(message('document'), uploadCommand)
-
 bot.launch();
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
